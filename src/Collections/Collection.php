@@ -76,12 +76,15 @@ abstract class Collection implements IteratorAggregate, Countable
 
     /**
      * @param callable $fn
+     * @return self
      */
-    public function forEach(callable $fn)
+    public function forEach(callable $fn): self
     {
         foreach ($this->items as $key => $value) {
             $fn($value, $key);
         }
+
+        return $this;
     }
 
     /**
