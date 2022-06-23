@@ -1,0 +1,29 @@
+{
+  "name": "csr/framework",
+  "description": "MVC Framework",
+  "type": "library",
+  "homepage": "https://github.com/vitalii-pokrivchak/framework",
+  "version": "0.1.1",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Csr\\Framework\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "vitalii-pokrivchak",
+      "email": "pokrivchakzvitalja@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "7.4.*",
+    "php-di/php-di": "6.4.0",
+    "vlucas/phpdotenv": "v5.4.1",
+    "fenom/fenom": "2.12.1",
+    "twig/twig": "v3.4.1",
+    "ext-json": "*",
+    "ext-fileinfo": "*"
+  }
+}
