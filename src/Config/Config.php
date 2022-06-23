@@ -30,9 +30,9 @@ class Config
      * @param string $key variable name
      * @param mixed $default default value
      *
-     * @return mixed|array|null
+     * @return mixed
      */
-    public function get(string $key = '', $default = null): ?array
+    public function get(string $key = '', $default = null)
     {
         if ($key == '') {
             return $_ENV;

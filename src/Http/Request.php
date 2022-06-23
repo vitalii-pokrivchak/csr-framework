@@ -109,7 +109,7 @@ class Request
      *
      * @return mixed
      */
-    public function headers(string $name = '', $default = null): array
+    public function headers(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->headers;
@@ -125,7 +125,7 @@ class Request
      *
      * @return mixed
      */
-    public function cookies(string $name = '', $default = null): array
+    public function cookies(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->cookies;
@@ -141,7 +141,7 @@ class Request
      *
      * @return mixed
      */
-    public function query(string $name = '', $default = null): array
+    public function query(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->query;
@@ -157,7 +157,7 @@ class Request
      *
      * @return mixed
      */
-    public function args(string $name = '', $default = null): array
+    public function args(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->args;
@@ -173,7 +173,7 @@ class Request
      *
      * @return mixed
      */
-    public function body(string $name = '', $default = null): array
+    public function body(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->body;
@@ -189,7 +189,7 @@ class Request
      *
      * @return mixed
      */
-    public function files(string $name = '', $default = null): array
+    public function files(string $name = '', $default = null)
     {
         if ($name == '') {
             return $this->files;
