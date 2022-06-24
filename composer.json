@@ -3,7 +3,6 @@
   "description": "MVC Framework",
   "type": "library",
   "homepage": "https://github.com/vitalii-pokrivchak/framework",
-  "version": "v0.1",
   "license": "MIT",
   "autoload": {
     "psr-4": {
