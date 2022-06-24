@@ -69,12 +69,13 @@ class Dispatcher
 
         if ($accessGranted) {
             if (is_array($route['handler']) && count($route['handler']) == 2) {
+                /** @var Controller $controller */
                 $controller = $route['handler'][0];
                 $action = $route['handler'][1];
                 $result = $this->invoker->call([$controller, $action]);
 
                 if (!($result instanceof Controller)) {
-                    echo $result;
+                    $controller->finish($result);
                 }
             } else {
                 echo $this->invoker->call($route['handler']);

@@ -17,4 +17,13 @@ abstract class Controller
         $this->request = $request;
         $this->response = $response;
     }
+
+    /**
+     * Finish request
+     *
+     * This is a system method
+     * @param $value
+     * @return mixed
+     */
+    abstract public function finish($value);
 }
