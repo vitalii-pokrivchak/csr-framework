@@ -7,6 +7,9 @@ use Csr\Framework\Http\Response;
 use Csr\Framework\Http\ContentType;
 use Csr\Framework\Http\Controller;
 use Csr\Framework\Http\StatusCode;
+use DI\Container;
+use DI\DependencyException;
+use DI\NotFoundException;
 use Invoker\Exception\InvocationException;
 use Invoker\Exception\NotCallableException;
 use Invoker\Exception\NotEnoughParametersException;
@@ -17,19 +20,23 @@ class Dispatcher
     protected Request $request;
     protected Response $response;
     protected Invoker $invoker;
+    protected Container $container;
 
-    public function __construct(Request $request, Response $response, Invoker $invoker)
+    public function __construct(Request $request, Response $response, Invoker $invoker, Container $container)
     {
         $this->request = $request;
         $this->response = $response;
         $this->invoker = $invoker;
+        $this->container = $container;
     }
 
     /**
      * @param $route
+     * @throws DependencyException
      * @throws InvocationException
      * @throws NotCallableException
      * @throws NotEnoughParametersException
+     * @throws NotFoundException
      */
     public function dispatch($route)
     {
@@ -57,6 +64,8 @@ class Dispatcher
      * @throws InvocationException
      * @throws NotCallableException
      * @throws NotEnoughParametersException
+     * @throws DependencyException
+     * @throws NotFoundException
      */
     private function dispatchHttp($route)
     {
@@ -69,9 +78,11 @@ class Dispatcher
 
         if ($accessGranted) {
             if (is_array($route['handler']) && count($route['handler']) == 2) {
-                /** @var Controller $controller */
-                $controller = $route['handler'][0];
+                $controllerName = $route['handler'][0];
                 $action = $route['handler'][1];
+
+                /** @var Controller $controller */
+                $controller = $this->container->get($controllerName);
                 $result = $this->invoker->call([$controller, $action]);
 
                 if (!($result instanceof Controller)) {

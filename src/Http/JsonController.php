@@ -13,7 +13,7 @@ abstract class JsonController extends Controller
      */
     public function ok($value): self
     {
-        $this->finish($value, StatusCode::OK);
+        $this->finish($value);
         return $this;
     }
 
