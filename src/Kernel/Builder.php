@@ -107,10 +107,10 @@ class Builder
      * @param string $path
      * @param string $cache
      * @param string $template class extended from TemplateProvider
-     * @param bool $cacheEnabled
+     * @param bool|callable $cacheEnabled
      * @return self
      */
-    public function withTemplate(string $path, string $template, string $cache = '', bool $cacheEnabled = false): self
+    public function withTemplate(string $path, string $template, string $cache = '', $cacheEnabled = false): self
     {
         $this->definitions['template.path'] = $path;
         $this->definitions['template.cache'] = $cache;
