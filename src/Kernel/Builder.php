@@ -22,7 +22,8 @@ class Builder
         'logger.path' => '',
         'logger.transport' => 'console',
         'logger.format' => '[{level}] - {time} - {message}',
-        'template.cacheEnabled' => false
+        'template.cacheEnabled' => false,
+        'template.cache' => ''
     ];
 
     /**
