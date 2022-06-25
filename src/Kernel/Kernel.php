@@ -57,7 +57,7 @@ class Kernel
     private function errorHandler(Logger $log)
     {
         set_exception_handler(function (Throwable $ex) use ($log) {
-            $log->error($ex->getMessage());
+            $log->error("{$ex->getMessage()} \n {$ex->getTraceAsString()}");
         });
     }
 }
