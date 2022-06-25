@@ -22,6 +22,7 @@ class Builder
         'logger.path' => '',
         'logger.transport' => 'console',
         'logger.format' => '[{level}] - {time} - {message}',
+        'template.cacheEnabled' => false
     ];
 
     /**
@@ -105,13 +106,14 @@ class Builder
      * @param string $path
      * @param string $cache
      * @param string $template class extended from TemplateProvider
-     *
+     * @param bool $cacheEnabled
      * @return self
      */
-    public function withTemplate(string $path, string $cache, string $template): self
+    public function withTemplate(string $path, string $cache, string $template, bool $cacheEnabled = false): self
     {
         $this->definitions['template.path'] = $path;
         $this->definitions['template.cache'] = $cache;
+        $this->definitions['template.cacheEnabled'] = $cacheEnabled;
 
         if (class_exists($template)) {
             if (is_subclass_of($template, TemplateProvider::class)) {
