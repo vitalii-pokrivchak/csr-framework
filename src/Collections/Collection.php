@@ -5,9 +5,10 @@ namespace Csr\Framework\Collections;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use JsonSerializable;
 use Traversable;
 
-abstract class Collection implements IteratorAggregate, Countable
+abstract class Collection implements IteratorAggregate, Countable, JsonSerializable
 {
     /**
      * @var array
@@ -149,12 +150,11 @@ abstract class Collection implements IteratorAggregate, Countable
     }
 
     /**
-     * @param int $options
-     * @return string
+     * @return array
      */
-    public function json($options = 0): string
+    public function jsonSerialize(): array
     {
-        return json_encode($this->items, $options);
+        return $this->items;
     }
 
     /**
