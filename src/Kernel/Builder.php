@@ -5,6 +5,7 @@ namespace Csr\Framework\Kernel;
 use Csr\Framework\Config\Config;
 use Csr\Framework\Http\Request;
 use Csr\Framework\Http\Response;
+use Csr\Framework\Http\Session;
 use Csr\Framework\Logger\Logger;
 use Csr\Framework\Router\Router;
 use Csr\Framework\Template\TemplateProvider;
@@ -13,6 +14,9 @@ use function \DI\get;
 
 class Builder
 {
+    /**
+     * @var array|string[]
+     */
     protected array $definitions = [
         'config.path' => '',
         'logger.path' => '',
@@ -74,14 +78,16 @@ class Builder
      * @param string $format message format
      * @param string $path location to logs if you use File transport
      * @param string $log class extended from Logger
+     * @return self
      */
     public function withLog(
         string $transport = 'console',
         string $format = '[{level}] - {time} - {message}',
         string $path = '',
         string $log = Logger::class
-    ): self {
-        $this->definitions['logger.transport']  = $transport;
+    ): self
+    {
+        $this->definitions['logger.transport'] = $transport;
         $this->definitions['logger.format'] = $format;
         $this->definitions['logger.path'] = $path;
 
@@ -151,6 +157,18 @@ class Builder
         return $this;
     }
 
+    /**
+     * @return $this
+     */
+    public function withSession(): self
+    {
+        $this->definitions[Session::class] = Session::start();
+        return $this;
+    }
+
+    /**
+     * @return array|string[]
+     */
     public function getDefinitions(): array
     {
         return $this->definitions;
