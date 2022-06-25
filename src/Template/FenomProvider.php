@@ -33,7 +33,7 @@ class FenomProvider extends TemplateProvider
             throw new Exception('Path to cache not provided in config');
         }
 
-        $this->fenom = Fenom::factory($path, $cache, $cacheEnabled ? 0 : Fenom::DISABLE_CACHE);
+        $this->fenom = Fenom::factory($path, $cacheEnabled ? $cache : '/tmp', $cacheEnabled ? 0 : Fenom::DISABLE_CACHE);
     }
 
     public function render(string $view, array $data = [])

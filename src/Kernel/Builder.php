@@ -110,7 +110,7 @@ class Builder
      * @param bool $cacheEnabled
      * @return self
      */
-    public function withTemplate(string $path, string $cache, string $template, bool $cacheEnabled = false): self
+    public function withTemplate(string $path, string $template, string $cache = '', bool $cacheEnabled = false): self
     {
         $this->definitions['template.path'] = $path;
         $this->definitions['template.cache'] = $cache;
