@@ -5,11 +5,12 @@ namespace Csr\Framework\Http;
 class Session
 {
     /**
+     * @param array $options
      * @return Session
      */
-    public static function start(): Session
+    public static function start(array $options = []): Session
     {
-        session_start();
+        session_start($options);
         return new self;
     }
 
@@ -47,5 +48,45 @@ class Session
     public function exists(string $key): bool
     {
         return array_key_exists($key, $_SESSION);
+    }
+
+    /**
+     * @return string
+     */
+    public function id(): string
+    {
+        return session_id();
+    }
+
+    /**
+     * @return string
+     */
+    public function name(): string
+    {
+        return session_name();
+    }
+
+    /**
+     * @return bool
+     */
+    public function abort(): bool
+    {
+        return session_abort();
+    }
+
+    /**
+     * @return bool
+     */
+    public function reset(): bool
+    {
+        return session_reset();
+    }
+
+    /**
+     * @return int
+     */
+    public function status(): int
+    {
+        return session_status();
     }
 }

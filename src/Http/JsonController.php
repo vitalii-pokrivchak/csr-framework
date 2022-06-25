@@ -75,7 +75,7 @@ abstract class JsonController extends Controller
         return $this;
     }
 
-    final public function finish($value, $status = StatusCode::OK)
+    public function finish($value, $status = StatusCode::OK)
     {
         $this->response->contentType(ContentType::JSON)->status($status);
         echo json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);

@@ -161,11 +161,12 @@ class Builder
     }
 
     /**
+     * @param array $options
      * @return $this
      */
-    public function withSession(): self
+    public function withSession(array $options = []): self
     {
-        $this->definitions[Session::class] = Session::start();
+        $this->definitions[Session::class] = Session::start($options);
         return $this;
     }
 
