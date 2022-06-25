@@ -2,6 +2,7 @@
 
 namespace Csr\Framework\Http;
 
+use Csr\Framework\Collections\Collection;
 use Csr\Framework\Template\TemplateProvider;
 use Exception;
 
@@ -26,14 +27,17 @@ abstract class HttpController extends Controller
      * Respond with template
      *
      * @param string $view
-     * @param array $data
+     * @param array|Collection $data
      * @param int $code
      *
      * @return self
      */
-    protected function view(string $view, array $data = [], int $code = StatusCode::OK): self
+    protected function view(string $view, $data = [], int $code = StatusCode::OK): self
     {
         $this->response->status($code);
+        if ($data instanceof Collection) {
+            $data = $data->array();
+        }
         $this->template->render($view, $data);
         return $this;
     }
