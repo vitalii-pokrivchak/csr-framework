@@ -89,4 +89,16 @@ class Session
     {
         return session_status();
     }
+
+    public function unset(): bool
+    {
+        return session_unset();
+    }
+
+    public function remove(string $key)
+    {
+        if (array_key_exists($key, $_SESSION)) {
+            unset($_SESSION[$key]);
+        }
+    }
 }
