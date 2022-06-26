@@ -72,9 +72,9 @@ abstract class HttpController extends Controller
         }
     }
 
-    public function finish($value, $status = StatusCode::OK)
+    public function finish($value)
     {
-        $this->response->contentType(ContentType::HTML)->status($status);
+        $this->response->contentType(ContentType::HTML);
         echo $value;
     }
 }

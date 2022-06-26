@@ -13,6 +13,7 @@ abstract class JsonController extends Controller
      */
     public function ok($value): self
     {
+        $this->response->status(StatusCode::OK);
         $this->finish($value);
         return $this;
     }
@@ -26,7 +27,8 @@ abstract class JsonController extends Controller
      */
     public function created($value): self
     {
-        $this->finish($value, StatusCode::CREATED);
+        $this->response->status(StatusCode::CREATED);
+        $this->finish($value);
         return $this;
     }
 
@@ -41,7 +43,8 @@ abstract class JsonController extends Controller
     {
         $response = ['status' => 404];
         $response['message'] = $message == '' ? 'Not Found' : $message;
-        $this->finish($response, StatusCode::NOT_FOUND);
+        $this->response->status(StatusCode::NOT_FOUND);
+        $this->finish($response);
         return $this;
     }
 
@@ -56,7 +59,8 @@ abstract class JsonController extends Controller
     {
         $response = ['status' => 400];
         $response['message'] = $message == '' ? 'Bad Request' : $message;
-        $this->finish($response, StatusCode::BAD);
+        $this->response->status(StatusCode::BAD);
+        $this->finish($response);
         return $this;
     }
 
@@ -71,13 +75,14 @@ abstract class JsonController extends Controller
     {
         $response = ['status' => 500];
         $response['message'] = $message == '' ? 'Internal Server Error' : $message;
-        $this->finish($response, StatusCode::SERVER_ERROR);
+        $this->response->status(StatusCode::SERVER_ERROR);
+        $this->finish($response,);
         return $this;
     }
 
-    public function finish($value, $status = StatusCode::OK)
+    public function finish($value)
     {
-        $this->response->contentType(ContentType::JSON)->status($status);
+        $this->response->contentType(ContentType::JSON);
         echo json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }
