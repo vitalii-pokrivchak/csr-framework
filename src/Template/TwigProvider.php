@@ -37,7 +37,7 @@ class TwigProvider extends TemplateProvider
             throw new Exception('Path to cache not provided in config');
         }
 
-        $this->twig = new Twig(new FilesystemLoader($path), $cacheEnabled ? ['cache' => $cache] : false);
+        $this->twig = new Twig(new FilesystemLoader($path), $cacheEnabled ? ['cache' => $cache] : ['cache' => false]);
     }
 
     /**
