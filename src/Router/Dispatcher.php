@@ -2,6 +2,7 @@
 
 namespace Csr\Framework\Router;
 
+use Csr\Framework\Common\JsonDeserializable;
 use Csr\Framework\Http\Request;
 use Csr\Framework\Http\Response;
 use Csr\Framework\Http\ContentType;
@@ -14,6 +15,7 @@ use Invoker\Exception\InvocationException;
 use Invoker\Exception\NotCallableException;
 use Invoker\Exception\NotEnoughParametersException;
 use Invoker\Invoker;
+use JsonSerializable;
 
 class Dispatcher
 {
@@ -89,7 +91,13 @@ class Dispatcher
                     $controller->finish($result);
                 }
             } else {
-                echo $this->invoker->call($route['handler']);
+                $result = $this->invoker->call($route['handler']);
+                if ($result instanceof JsonSerializable) {
+                    $this->response->contentType(ContentType::JSON);
+                    echo json_encode($result, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                } else {
+                    echo $result;
+                }
             }
         } else {
             $this->dispatchFallback();
@@ -98,15 +106,25 @@ class Dispatcher
 
     private function dispatchStorage($route)
     {
-        $filepath = $this->request->args('path');
-        if ($filepath !== '') {
-            $file = $route['path'] . $filepath;
-            if (file_exists($file)) {
-                $this->resolveExtension($file);
-                readfile($file);
-            } else {
-                $this->response->status(StatusCode::NOT_FOUND);
+        $args = $this->request->args();
+        if (count($args) > 0) {
+            $key = array_key_first($args);
+            $filepath = $args[$key];
+            if ($filepath !== '') {
+                $pos = stripos($route['path'], DIRECTORY_SEPARATOR);
+                if ($pos === false) {
+                    $route['path'] = $route['path'] . DIRECTORY_SEPARATOR;
+                }
+                $file = $route['path'] . $filepath;
+                if (file_exists($file)) {
+                    $this->resolveExtension($file);
+                    readfile($file);
+                } else {
+                    $this->response->status(StatusCode::NOT_FOUND);
+                }
             }
+        } else {
+            $this->response->status(StatusCode::NOT_FOUND);
         }
     }
 

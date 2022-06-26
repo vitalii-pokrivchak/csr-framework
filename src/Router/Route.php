@@ -132,10 +132,26 @@ class Route
      */
     public static function storage(string $url, string $path)
     {
+        $args = self::parseArgs($url);
+        if (count($args) === 0) {
+            $args[] = [
+                'name' => 'path',
+                'type' => 'string',
+                'required' => true
+            ];
+
+            $pos = stripos($url, '/');
+            if ($pos === false) {
+                $url .= '/';
+            }
+
+            $url .= '{path}';
+        }
+
         self::$routes[$url][Method::GET] = [
             'type' => 'storage',
             'path' => $path,
-            'args' => self::parseArgs($url)
+            'args' => $args
         ];
     }
 
