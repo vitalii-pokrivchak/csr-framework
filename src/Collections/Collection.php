@@ -4,11 +4,12 @@ namespace Csr\Framework\Collections;
 
 use ArrayIterator;
 use Countable;
+use Csr\Framework\Common\JsonDeserializable;
 use IteratorAggregate;
 use JsonSerializable;
 use Traversable;
 
-abstract class Collection implements IteratorAggregate, Countable, JsonSerializable
+abstract class Collection implements IteratorAggregate, Countable, JsonSerializable, JsonDeserializable
 {
     /**
      * @var array
@@ -155,6 +156,14 @@ abstract class Collection implements IteratorAggregate, Countable, JsonSerializa
     public function jsonSerialize(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function deserialize(array $data)
+    {
+        $this->items = $data;
     }
 
     /**
