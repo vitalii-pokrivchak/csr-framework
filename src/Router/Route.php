@@ -160,7 +160,8 @@ class Route
         self::$routes[$url][Method::GET] = [
             'type' => 'view',
             'view' => $view,
-            'data' => $data
+            'data' => $data,
+            'args' => self::parseArgs($url)
         ];
     }
 

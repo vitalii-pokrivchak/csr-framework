@@ -153,7 +153,10 @@ class Dispatcher
         if ($templateProvider !== null) {
             $view = $route['view'];
             $data = $route['data'] ?? [];
-            $templateProvider->render($view, $data);
+            $templateProvider->render($view, [
+                'data' => $data,
+                'args' => $this->request->args()
+            ]);
         } else {
             $this->dispatchFallback();
         }
