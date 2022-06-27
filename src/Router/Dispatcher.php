@@ -2,12 +2,12 @@
 
 namespace Csr\Framework\Router;
 
-use Csr\Framework\Common\JsonDeserializable;
 use Csr\Framework\Http\Request;
 use Csr\Framework\Http\Response;
 use Csr\Framework\Http\ContentType;
 use Csr\Framework\Http\Controller;
 use Csr\Framework\Http\StatusCode;
+use Csr\Framework\Template\TemplateProvider;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
@@ -50,6 +50,9 @@ class Dispatcher
                     break;
                 case 'storage':
                     $this->dispatchStorage($route);
+                    break;
+                case 'view':
+                    $this->dispatchView($route);
                     break;
                 default:
                     $this->dispatchFallback();
@@ -139,6 +142,20 @@ class Dispatcher
         $this->response->status(StatusCode::NOT_FOUND);
         if ($fallback != null) {
             $this->invoker->call($fallback['handler']);
+        }
+    }
+
+    private function dispatchView($route)
+    {
+        /** @var TemplateProvider $templateProvider */
+        $templateProvider = $this->container->get(TemplateProvider::class);
+
+        if ($templateProvider !== null) {
+            $view = $route['view'];
+            $data = $route['data'] ?? [];
+            $templateProvider->render($view, $data);
+        } else {
+            $this->dispatchFallback();
         }
     }
 

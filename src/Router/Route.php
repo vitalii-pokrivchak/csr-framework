@@ -155,6 +155,15 @@ class Route
         ];
     }
 
+    public static function view(string $url, string $view, array $data = [])
+    {
+        self::$routes[$url][Method::GET] = [
+            'type' => 'view',
+            'view' => $view,
+            'data' => $data
+        ];
+    }
+
     /**
      * Describe 404 mapping
      *
