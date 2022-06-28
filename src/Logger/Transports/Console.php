@@ -8,7 +8,6 @@ class Console extends Transport
 {
     public function output(string $message, string $level)
     {
-        $message .= "\n";
         $stream = fopen('php://stdout', 'w');
         switch ($level) {
             case Level::DEBUG:
@@ -24,6 +23,7 @@ class Console extends Transport
                 $message = "\033[93m${message}\033[0m";
                 break;
         }
+        $message .= "\n";
         fputs($stream, $message);
         fclose($stream);
     }

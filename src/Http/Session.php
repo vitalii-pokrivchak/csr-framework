@@ -4,14 +4,23 @@ namespace Csr\Framework\Http;
 
 class Session
 {
+    private static Session $instance;
+
+    private function __construct(array $options = [])
+    {
+        session_start($options);
+    }
+
     /**
      * @param array $options
      * @return Session
      */
     public static function start(array $options = []): Session
     {
-        session_start($options);
-        return new self;
+        if (self::$instance === null) {
+            self::$instance = new self($options);
+        }
+        return self::$instance;
     }
 
     /**
