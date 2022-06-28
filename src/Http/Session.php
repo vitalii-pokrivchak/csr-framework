@@ -4,7 +4,7 @@ namespace Csr\Framework\Http;
 
 class Session
 {
-    private static Session $instance;
+    private static ?Session $instance = null;
 
     private function __construct(array $options = [])
     {
