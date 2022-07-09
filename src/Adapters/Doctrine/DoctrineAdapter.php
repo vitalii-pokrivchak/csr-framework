@@ -8,7 +8,8 @@ class DoctrineAdapter
 {
     protected bool $isDev = true;
     protected array $dbSource = [];
-    protected string $driver;
+    protected string $pathToEntities = '';
+    protected string $driver = '';
 
     public function dev(bool $isDev): self
     {
@@ -58,9 +59,16 @@ class DoctrineAdapter
         return $this;
     }
 
+    public function pathToEntities(string $path): self
+    {
+        $this->pathToEntities = $path;
+        return $this;
+    }
+
     public function build(): array
     {
         return [
+            'pathToEntities' => $this->pathToEntities,
             'dbSource' => $this->dbSource,
             'driver' => $this->driver,
             'isDevMode' => $this->isDev

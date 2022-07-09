@@ -266,7 +266,7 @@ class Kernel
                 $dbSource['dbSource'][$k] = $config->getOrThrow($v);
             }
             $dbSource['dbSource']['driver'] = $dbSource['driver'];
-            $ormConfig = ORMSetup::createAnnotationMetadataConfiguration(['../src/'], $dbSource['isDevMode']);
+            $ormConfig = ORMSetup::createAnnotationMetadataConfiguration([$dbSource['pathToEntities']], $dbSource['isDevMode']);
             return EntityManager::create($dbSource['dbSource'], $ormConfig);
         }]);
         return $this;
