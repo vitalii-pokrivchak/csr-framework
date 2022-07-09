@@ -2,7 +2,7 @@
 
 namespace Csr\Framework\Http;
 
-use Csr\Framework\Common\JsonDeserializable;
+use Csr\Framework\Common\Deserializable;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
@@ -203,7 +203,7 @@ class Request
             return $obj;
         } elseif (class_exists($type)) {
             $obj = $this->container->get($type);
-            if ($obj instanceof JsonDeserializable) {
+            if ($obj instanceof Deserializable) {
                 $obj->deserialize($values);
             }
             return $obj;

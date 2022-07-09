@@ -3,6 +3,7 @@
 namespace Csr\Framework\Kernel;
 
 use Closure;
+use Csr\Framework\Adapters\Doctrine\DoctrineBuilder;
 use Csr\Framework\Config\Config;
 use Csr\Framework\Http\Method;
 use Csr\Framework\Http\Request;
@@ -16,6 +17,8 @@ use DI\Container;
 use DI\ContainerBuilder;
 use DI\DependencyException;
 use DI\NotFoundException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use Invoker\Exception\InvocationException;
 use Invoker\Exception\NotCallableException;
 use Invoker\Exception\NotEnoughParametersException;
@@ -252,6 +255,21 @@ class Kernel
                 header("Access-Control-Allow-Headers : {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
             }
         }
+    }
+
+    public function doctrine(callable $fn): self
+    {
+        $this->containerBuilder->addDefinitions(['database.source' => $fn]);
+        $this->containerBuilder->addDefinitions([EntityManager::class => function (Container $container, Config $config) {
+            $dbSource = $container->get('database.source');
+            foreach ($dbSource['dbSource'] as $k => $v) {
+                $dbSource['dbSource'][$k] = $config->getOrThrow($v);
+            }
+            $dbSource['dbSource']['driver'] = $dbSource['driver'];
+            $ormConfig = ORMSetup::createAnnotationMetadataConfiguration(['../src/'], $dbSource['isDevMode']);
+            return EntityManager::create($dbSource['dbSource'], $ormConfig);
+        }]);
+        return $this;
     }
 
     /**

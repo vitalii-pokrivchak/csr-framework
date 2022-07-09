@@ -23,6 +23,10 @@
     "fenom/fenom": "2.12.1",
     "twig/twig": "v3.4.1",
     "ext-json": "*",
-    "ext-fileinfo": "*"
+    "ext-fileinfo": "*",
+    "doctrine/orm": "^2.11.0",
+    "doctrine/dbal": "^3.2",
+    "doctrine/annotations": "1.13.2",
+    "symfony/cache": "5.4.x-dev"
   }
 }
