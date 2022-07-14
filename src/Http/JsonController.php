@@ -2,6 +2,8 @@
 
 namespace Csr\Framework\Http;
 
+use Csr\Framework\Common\Serializable;
+
 abstract class JsonController extends Controller
 {
     /**
@@ -82,6 +84,18 @@ abstract class JsonController extends Controller
 
     public function finish($value)
     {
+        if ($value instanceof Serializable) {
+            $value = $value->serialize();
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                if ($value instanceof Serializable) {
+                    $value[$k] = $value->serialize();
+                }
+            }
+        }
+
         $this->response->contentType(ContentType::JSON);
         echo json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }

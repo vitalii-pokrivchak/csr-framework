@@ -3,7 +3,6 @@
 namespace Csr\Framework\Kernel;
 
 use Closure;
-use Csr\Framework\Adapters\Doctrine\DoctrineBuilder;
 use Csr\Framework\Config\Config;
 use Csr\Framework\Http\Method;
 use Csr\Framework\Http\Request;
@@ -232,8 +231,9 @@ class Kernel
      * @param array $methods
      * @param array $headers
      * @param bool $credentials
+     * @return $this
      */
-    public function cors(array $origins = [], array $methods = [], array $headers = [], bool $credentials = false)
+    public function cors(array $origins = [], array $methods = [], array $headers = [], bool $credentials = false): Kernel
     {
         if (!empty($origins) && !empty($methods) && !empty($headers) && $credentials) {
             $origins = implode(',', $origins);
@@ -255,6 +255,8 @@ class Kernel
                 header("Access-Control-Allow-Headers : {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
             }
         }
+
+        return $this;
     }
 
     public function doctrine(callable $fn): self
