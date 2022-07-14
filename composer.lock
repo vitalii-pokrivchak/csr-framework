@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f55929593b2f73d6d6ababda32a6d62a",
+    "content-hash": "4f2b389aaaa55aaf55f98f5d3c82917f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -178,12 +178,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "c7ad5f94dd8e922957cda1a6348d11a5ca919f44"
+                "reference": "d84715fa080a32f76a68200eb015587d99f4675e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/c7ad5f94dd8e922957cda1a6348d11a5ca919f44",
-                "reference": "c7ad5f94dd8e922957cda1a6348d11a5ca919f44",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/d84715fa080a32f76a68200eb015587d99f4675e",
+                "reference": "d84715fa080a32f76a68200eb015587d99f4675e",
                 "shasum": ""
             },
             "require": {
@@ -191,9 +191,9 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9.0",
-                "phpstan/phpstan": "^1",
+                "phpstan/phpstan": "^1.4.8",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9.1.5",
-                "vimeo/psalm": "^4.2.1"
+                "vimeo/psalm": "^4.22"
             },
             "type": "library",
             "autoload": {
@@ -239,7 +239,7 @@
                 "issues": "https://github.com/doctrine/collections/issues",
                 "source": "https://github.com/doctrine/collections/tree/1.7.x"
             },
-            "time": "2021-12-29T22:40:48+00:00"
+            "time": "2022-07-13T14:49:40+00:00"
         },
         {
             "name": "doctrine/common",
@@ -338,12 +338,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "3be3e53a79444b42057a06e77b492a2360233af9"
+                "reference": "8dd07d12f66411914c82305774b469362842807a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/3be3e53a79444b42057a06e77b492a2360233af9",
-                "reference": "3be3e53a79444b42057a06e77b492a2360233af9",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8dd07d12f66411914c82305774b469362842807a",
+                "reference": "8dd07d12f66411914c82305774b469362842807a",
                 "shasum": ""
             },
             "require": {
@@ -441,7 +441,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-03T17:11:38+00:00"
+            "time": "2022-07-09T19:59:07+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -820,12 +820,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "1538d70bb9a979fb148309a541e3d084c652b204"
+                "reference": "48b4f63f614be42e27a78e27604e54e8c1cecd17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/1538d70bb9a979fb148309a541e3d084c652b204",
-                "reference": "1538d70bb9a979fb148309a541e3d084c652b204",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/48b4f63f614be42e27a78e27604e54e8c1cecd17",
+                "reference": "48b4f63f614be42e27a78e27604e54e8c1cecd17",
                 "shasum": ""
             },
             "require": {
@@ -912,7 +912,7 @@
                 "issues": "https://github.com/doctrine/orm/issues",
                 "source": "https://github.com/doctrine/orm/tree/2.13.x"
             },
-            "time": "2022-07-08T11:54:43+00:00"
+            "time": "2022-07-10T21:18:39+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -2904,7 +2904,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "symfony/cache": 20
+        "symfony/cache": 20,
+        "doctrine/orm": 20,
+        "doctrine/dbal": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

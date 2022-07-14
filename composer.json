@@ -24,9 +24,9 @@
     "twig/twig": "v3.4.1",
     "ext-json": "*",
     "ext-fileinfo": "*",
-    "doctrine/orm": "^3.0.x-dev",
-    "doctrine/dbal": "^3.4.x-dev",
     "doctrine/annotations": "1.13.2",
-    "symfony/cache": "5.4.x-dev"
+    "symfony/cache": "5.4.x-dev",
+    "doctrine/orm": "2.13.x-dev",
+    "doctrine/dbal": "3.4.x-dev"
   }
 }
