@@ -90,8 +90,8 @@ abstract class JsonController extends Controller
 
         if (is_array($value)) {
             foreach ($value as $k => $v) {
-                if ($value instanceof Serializable) {
-                    $value[$k] = $value->serialize();
+                if ($v instanceof Serializable) {
+                    $value[$k] = $v->serialize();
                 }
             }
         }
