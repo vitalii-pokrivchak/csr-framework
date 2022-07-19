@@ -25,6 +25,8 @@ use Invoker\Invoker;
 use Invoker\ParameterResolver\Container\TypeHintContainerResolver;
 use Throwable;
 use function DI\get;
+use Whoops\Run;
+use Whoops\Handler\PrettyPageHandler;
 
 class Kernel
 {
@@ -59,13 +61,14 @@ class Kernel
         }
 
         $this->container = $this->containerBuilder->build();
-        $this->container->set(Invoker::class, new Invoker(new TypeHintContainerResolver($this->container), $this->container));
+        $this->container->set(Invoker::class , new Invoker(new TypeHintContainerResolver($this->container), $this->container));
 
         if (php_sapi_name() !== 'cli') {
             $log = $this->container->get(Logger::class);
             /** @var Router $router */
             $router = $this->container->get(Router::class);
-            $this->errorHandler($log);
+            $config = $this->container->get(Config::class);
+            $this->errorHandler($log, $config);
             $router->init();
         }
     }
@@ -90,10 +93,17 @@ class Kernel
         return self::$instance;
     }
 
-    private function errorHandler(Logger $log)
+    private function errorHandler(Logger $log, Config $config)
     {
-        set_exception_handler(function (Throwable $ex) use ($log) {
+        $whoops = new Run();
+        $whoops->pushHandler(new PrettyPageHandler());
+
+        set_exception_handler(function (Throwable $ex) use ($log, $whoops, $config) {
             $log->error("{$ex->getMessage()}\n{$ex->getTraceAsString()}");
+            $mode = $config->get('APP_MODE', 'dev');
+            if ($mode === 'dev' || $mode === 'development') {
+                $whoops->handleException($ex);
+            }
         });
     }
 
@@ -140,7 +150,8 @@ class Kernel
             if (class_exists($target)) {
                 $this->containerBuilder->addDefinitions([$name => get($target)]);
             }
-        } else {
+        }
+        else {
             $this->containerBuilder->addDefinitions([$name => $target]);
         }
         return $this;
@@ -191,7 +202,7 @@ class Kernel
      * @param false $cacheEnabled
      * @return $this
      */
-    public function template(string $path, string $template = TwigProvider::class, string $cache = '', $cacheEnabled = false): self
+    public function template(string $path, string $template = TwigProvider::class , string $cache = '', $cacheEnabled = false): self
     {
         $this->containerBuilder->addDefinitions(['template.path' => $path, 'template.cache' => $cache, 'template.cacheEnabled' => $cacheEnabled]);
         if (class_exists($template)) {
@@ -247,7 +258,8 @@ class Kernel
                 header("Access-Control-Allow-Methods: {$methods}");
                 header("Access-Control-Allow-Headers : {$headers}");
             }
-        } else {
+        }
+        else {
             header("Access-Control-Allow-Origin: *");
             header("Access-Control-Allow-Methods: GET,HEAD,PUT,PATCH,POST,DELETE");
 

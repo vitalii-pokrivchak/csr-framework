@@ -15,6 +15,8 @@ class Config
 {
     protected Container $container;
 
+    protected array $values = [];
+
     /**
      * Constructor
      * @param Container $container
@@ -29,7 +31,9 @@ class Config
         try {
             $dotenv = Dotenv::createUnsafeImmutable($path);
             $dotenv->load();
-        } catch (InvalidPathException $ex) {
+            $this->values = getenv();
+        }
+        catch (InvalidPathException $ex) {
             $logger->warning('Cannot find env file');
         }
     }
@@ -46,13 +50,13 @@ class Config
     public function get(string $key = '', $default = null)
     {
         if ($key == '') {
-            return $_ENV;
+            return $this->values;
         }
 
         $key = strtoupper($key);
 
-        if (array_key_exists($key, $_ENV)) {
-            return $_ENV[$key];
+        if (array_key_exists($key, $this->values)) {
+            return $this->values[$key];
         }
 
         return $default;
@@ -70,8 +74,8 @@ class Config
     {
         $key = strtoupper($key);
 
-        if (array_key_exists($key, $_ENV)) {
-            return $_ENV[$key];
+        if (array_key_exists($key, $this->values)) {
+            return $this->values[$key];
         }
 
         throw new Exception('Cannot find value in config');
@@ -85,7 +89,7 @@ class Config
      */
     public function exists(string $key): bool
     {
-        return array_key_exists($key, $_ENV);
+        return array_key_exists($key, $this->values);
     }
 
     /**

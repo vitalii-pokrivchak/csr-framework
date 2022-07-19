@@ -27,6 +27,7 @@
     "doctrine/annotations": "1.13.2",
     "symfony/cache": "5.4.x-dev",
     "doctrine/orm": "2.13.x-dev",
-    "doctrine/dbal": "3.4.x-dev"
+    "doctrine/dbal": "3.4.x-dev",
+    "filp/whoops": "^2.14"
   }
 }
