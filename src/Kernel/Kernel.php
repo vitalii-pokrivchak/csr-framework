@@ -271,18 +271,32 @@ class Kernel
         return $this;
     }
 
-    public function doctrine(callable $fn): self
+    public function doctrine(string $driver, array $pathToEntities): self
     {
-        $this->containerBuilder->addDefinitions(['database.source' => $fn]);
+        $this->containerBuilder->addDefinitions(['database.driver' => $driver, 'database.pathToEntities' => $pathToEntities]);
+
         $this->containerBuilder->addDefinitions([EntityManager::class => function (Container $container, Config $config) {
-            $dbSource = $container->get('database.source');
-            foreach ($dbSource['dbSource'] as $k => $v) {
-                $dbSource['dbSource'][$k] = $config->getOrThrow($v);
+            $driver = $container->get('database.driver');
+            $pathToEntities = $container->get('database.pathToEntities');
+
+            $connection = ['driver' => $driver];
+            $mode = $config->get('APP_MODE', 'dev') === 'dev' || 'development' ? true : false;
+
+            if ($driver === 'pdo_sqlite') {
+                $connection['path'] = $config->getOrThrow('DATABASE_PATH');
             }
-            $dbSource['dbSource']['driver'] = $dbSource['driver'];
-            $ormConfig = ORMSetup::createAnnotationMetadataConfiguration([$dbSource['pathToEntities']], $dbSource['isDevMode']);
-            return EntityManager::create($dbSource['dbSource'], $ormConfig);
+            else {
+                $connection['host'] = $config->getOrThrow('DATABASE_HOST');
+                $connection['name'] = $config->getOrThrow('DATABASE_NAME');
+                $connection['port'] = $config->getOrThrow('DATABASE_PORT');
+                $connection['user'] = $config->getOrThrow('DATABASE_USER');
+                $connection['password'] = $config->getOrThrow('DATABASE_PASSWORD');
+            }
+
+            $ormConfig = ORMSetup::createAnnotationMetadataConfiguration($pathToEntities, $mode);
+            return EntityManager::create($connection, $ormConfig);
         }]);
+
         return $this;
     }
 
