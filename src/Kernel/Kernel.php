@@ -47,7 +47,7 @@ class Kernel
     {
         $this->containerBuilder = new ContainerBuilder();
         $this->containerBuilder->addDefinitions([
-            'config.path' => '.',
+            'config.path' => $_SERVER['DOCUMENT_ROOT'],
             'logger.path' => './logs/',
             'logger.transport' => 'console',
             'logger.format' => '[{level}] - {time} - {message}',
@@ -287,7 +287,7 @@ class Kernel
             }
             else {
                 $connection['host'] = $config->getOrThrow('DATABASE_HOST');
-                $connection['name'] = $config->getOrThrow('DATABASE_NAME');
+                $connection['dbname'] = $config->getOrThrow('DATABASE_NAME');
                 $connection['port'] = $config->getOrThrow('DATABASE_PORT');
                 $connection['user'] = $config->getOrThrow('DATABASE_USER');
                 $connection['password'] = $config->getOrThrow('DATABASE_PASSWORD');
